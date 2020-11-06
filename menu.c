@@ -37,16 +37,16 @@ int main() {
 	do {
 		      //============================================================================
 		printf("%s",linhaPadrao);
-		printf("|          SISTEMA DE HOSPITALAR DE INFORMACAO DE COVID-19                 |\n");
+		printf("|             SISTEMA HOSPITALAR DE INFORMACAO SOBRE O COVID               |\n");
 		printf("|                      VERSAO 1.0   UNIP   PIM IV                          |\n");
 
 	    // print string
 		printf("%s",linhaPadrao);
 		printf("Menu \n\n");
-		printf(" 1)cadastrar  \n");
+		printf(" 1)Cadastrar  \n");
 		printf(" 2)Alterar / Excluir    \n");
-		printf(" 3)exportar lista de infectados\n");
-		printf(" 4)sair \n");
+		printf(" 3)Exportar lista de infectados\n");
+		printf(" 4)Sair \n");
 		printf("%s",linhaPadrao);
 		scanf("%d", &choice);
 
