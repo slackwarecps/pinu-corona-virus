@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-g
-EXECS=menu
+EXECS=menu arquivo novo login teste
 
 all: $(EXECS)
 

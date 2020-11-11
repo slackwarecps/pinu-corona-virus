@@ -8,9 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 void limpar(int cmdClean);
-
 
 int main() {
 	int cmdClean = 0;
@@ -21,36 +19,34 @@ int main() {
        // printf("Windows 32 bit\n");
     #endif
 #else
-  //  printf("Not a Windows OS\n");
-    cmdClean = 1;
+	//  printf("Not a Windows OS\n");
+	cmdClean = 1;
 #endif
 
-    limpar(cmdClean);
+	limpar(cmdClean);
 
 	int choice;
 
-	 char linhaPadrao[] = "============================================================================\n";
-
-
-
+	char linhaPadrao[] =
+			"============================================================================\n";
 
 	do {
-		      //============================================================================
-		printf("%s",linhaPadrao);
-		printf("|             SISTEMA HOSPITALAR DE INFORMACAO SOBRE O COVID               |\n");
-		printf("|                      VERSAO 1.0   UNIP   PIM IV                          |\n");
+		//============================================================================
+		printf("%s", linhaPadrao);
+		printf(
+				"|             SISTEMA HOSPITALAR DE INFORMACAO SOBRE O COVID               |\n");
+		printf(
+				"|                      VERSAO 1.0   UNIP   PIM IV                          |\n");
 
-	    // print string
-		printf("%s",linhaPadrao);
+		// print string
+		printf("%s", linhaPadrao);
 		printf("Menu \n\n");
 		printf(" 1)Cadastrar  \n");
 		printf(" 2)Alterar / Excluir    \n");
 		printf(" 3)Exportar lista de infectados\n");
 		printf(" 4)Sair \n");
-		printf("%s",linhaPadrao);
+		printf("%s", linhaPadrao);
 		scanf("%d", &choice);
-
-
 
 		switch (choice) {
 		case 1:
@@ -68,16 +64,13 @@ int main() {
 
 		default:
 
-
-
-			if (cmdClean==1) {
+			if (cmdClean == 1) {
 				system("clear");
-			}
-			else {
+			} else {
 				system("cls");
 			}
 
-			printf("%d. ",choice);
+			printf("%d. ", choice);
 			printf("Escolha invalida, tente novamente!! \n");
 			break;
 		}
@@ -87,14 +80,12 @@ int main() {
 	return 0;
 }
 
-void limpar(int cmdClean){
-	if (cmdClean==1) {
-				system("clear");
-			}
-			else {
-				system("cls");
-			}
+void limpar(int cmdClean) {
+	if (cmdClean == 1) {
+		system("clear");
+	} else {
+		system("cls");
+	}
 
 }
-
 
