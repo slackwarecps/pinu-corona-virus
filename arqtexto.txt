@@ -10,3 +10,4 @@ SEBASTIAO;26721993877;11983477360;DOUTOR LUCIO PEREIRA PEIXOTO;9090;JARDIM CHAPA
 a;a;a;a;;a;a;a;a;a;a;a;a;
 b;b;b;b;;b;b;b;b;b;b;b;b;
 FABIO ALVARO PEREIRA;26721993877;11983477360;DOUTOR LUCIO PEREIRA PEIXOTO;9090;JARDIM CHAPADAO;CAMPINAS;SP;13070-028;20-04-1979;06-11-2020;fabio.alvaro@gmail.com;Diabetes, obesidade, hipertensão, tuberculose, outros;
+a;a;a;a;;a;a;a;a;a;a;z;a;

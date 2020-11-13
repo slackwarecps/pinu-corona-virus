@@ -15,6 +15,7 @@ int menu();
 int cadastro();
 int salvar();
 int mostrarArquivo();
+char linhaPadrao[] ="============================================================================\n";
 
 struct cadastroData {
 	char *nome;
@@ -34,6 +35,15 @@ struct cadastroData {
 
 int main() {
 
+	//============================================================================
+	printf("%s", linhaPadrao);
+	printf(
+			"|             SISTEMA HOSPITALAR DE INFORMACAO SOBRE O COVID               |\n");
+	printf(
+			"|                      VERSAO 1.0   UNIP   PIM IV                          |\n");
+	// print string
+	printf("%s", linhaPadrao);
+	printf("LOGIN \n\n");
 	char nome[50];
 	char senha[50];
 
@@ -95,8 +105,7 @@ int menu() {
 
 	int choice;
 
-	char linhaPadrao[] =
-			"============================================================================\n";
+
 
 	do {
 		//============================================================================
@@ -328,6 +337,7 @@ int mostrarArquivo(){
 		car = fgetc(farquivo);
 	}
 	fclose(farquivo);
+
 	return 0;
 
 }

@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-g
-EXECS=validacao
+EXECS=prgcovid
 
 all: $(EXECS)
 
