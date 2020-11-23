@@ -1,1 +1,4 @@
 a;a;a;a;;a;a;a;13070-028;ÿÿ;;qwe;qwe;
+fabio;26721993880;123;123;;123;123;123;123;ÿÿ;;eu@eu.com.br;nada;
+Fabio;Pereira;26721993880;das;;batatas,;333;291;123;ÿÿ;;qwe;qwe;
+a;26721993880;123;123;123;123;123;SP;13070028;ÿÿ;;eu@eu.com.br;nenhuma;

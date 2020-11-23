@@ -202,7 +202,7 @@ int cadastro() {
 	scanf("%s", rua);
 
 	printf("Numero: ");
-	scanf("%s", rua);
+	scanf("%s", numero);
 
 	printf("Bairro: ");
 	scanf("%s", bairro);
@@ -258,8 +258,8 @@ int cadastro() {
 	printf("cpf: 			%s \n", cpf);
 	printf("telefone: 		%s \n", telefone);
 	printf("rua: 			%s \n", rua);
-	printf("numero: 		%s \n", numero);
-	printf("bairro: 		%s \n", bairro);
+	printf("Numero: 		%s \n", numero);
+	printf("Bairro: 		%s \n", bairro);
 	printf("cidade: 		%s \n", cidade);
 	printf("estado: 		%s \n", estado);
 	printf("cep: 			%s \n", cep);
@@ -405,7 +405,7 @@ int mostrarArquivo() {
 	int i;
 	char tsaida[50], car;
 
-	farquivo = fopen("arqtexto.txt", "r");
+	farquivo = fopen("secretaria_saude.csv", "r");
 	if (farquivo == NULL) // Pode-se fazer o teste dessa forma
 	{
 		printf("Erro na abertura do arquivo");
@@ -423,6 +423,7 @@ int mostrarArquivo() {
 	}
 	fclose(farquivo);
 
+	printf("\n\n");
 	return 0;
 
 }
