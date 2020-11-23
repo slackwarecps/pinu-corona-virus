@@ -19,7 +19,7 @@ int main() {
 	printf("DT.NASCIMENTO: ");
 	scanf("%s", dtnasc);
 
-
+ printf("data informada: %s",dtnasc );
 
 
 //	char buf[100];
