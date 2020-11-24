@@ -1,9 +1,10 @@
 /*
- * login.c
+ * prgcovid.c
  *
  *  Created on: 11 de nov. de 2020
- *      Author: fabioalvaro
+ *  Author: fabioalvaro@gmail.com
  */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,13 +22,15 @@ int pegaData();
 int pegaDataDiag();
 int validarCPF();
 int ufValida();
-void defaultScanf (char *value, char defaultValue);
+void defaultScanf(char *value, char defaultValue);
 char gethoje();
-int emailValida();
+char validemail(char email_[], int limit);
 
 char linhaPadrao[] =
 		"============================================================================\n";
 int anoNasc, anoDiag;
+char dataNascimento;
+char dataDiagnostico;
 int idade;
 int dataValida = 0;
 int dataValidadiag = 0;
@@ -52,7 +55,14 @@ struct cadastroData {
 	int grupoRisco;
 };
 
+
+
+char linhax[10];
+
 int main() {
+
+
+
 
 
 
@@ -76,10 +86,7 @@ int main() {
 	printf("digite a senha e pressione enter: ");
 	scanf("%s", senha);
 
-	//printf("voce digitou %s",senha);
-
 	if (strcmp(senha, "123") == 0) {
-		//printf("\n\n **** PASSOU colocar o menu aqui \n\n ****");
 		menu();
 
 	} else {
@@ -179,6 +186,9 @@ int menu() {
 
 int cadastro() {
 
+	/* TIPOS LOCAIS                                                               */
+	char emailx[120] = { "fuf@mail.ig" };
+
 	int a, b, c, numerox, grupoRisco;
 	char nome[50];
 	char cpf[50];
@@ -192,9 +202,10 @@ int cadastro() {
 	char cep[50];
 	char dtnasc[50];
 	char dtdiag[50];
-	char email[50];
+	char email[120];
 	char comorbidades[50];
 	struct cadastroData registro;
+
 	int x;
 
 	grupoRisco = 0;
@@ -318,8 +329,6 @@ int cadastro() {
 
 	} while (x == 0);
 
-
-
 	//inico do pega e valida o campo dt.nasc.
 	do {
 		dataValida = pegaData();
@@ -330,6 +339,10 @@ int cadastro() {
 		}
 	} while (dataValida == 0);
 	//fim do pega e valida dt.nasc
+
+
+
+
 
 //	printf("DT.DIAGNOSTICO: ");
 //	scanf("%s", dtdiag);
@@ -344,8 +357,34 @@ int cadastro() {
 	} while (dataValidadiag == 0);
 	//fim do pega e valida dt.nasc
 
-	printf("E-MAIL: ");
-	scanf("%s", email);
+//	printf("E-MAIL: ");
+//	scanf("%s", email);
+	do {
+		printf("E-MAIL : ");
+		x = scanf("%s", email);
+
+		if (x == 0) {
+			char c;
+			printf("E-MAIL: pressione qualquer tecla \n");
+			c = getchar();
+		} else {
+
+			if (strlen(email) > 120) {
+				printf(
+						"E-MAIL Campo deve ter menos de 120 caracteres. pressione qualquer tecla  \n");
+				x = 0;
+				c = getchar();
+
+			}
+			if (validemail(email, 120) == 0) {
+				printf("E-MAIL invalido!!!. pressione qualquer tecla \n");
+				x = 0;
+				c = getchar();
+			}
+
+		}
+
+	} while (x == 0);
 
 	printf("COMORBIDADES: ");
 	scanf("%s", comorbidades);
@@ -361,17 +400,14 @@ int cadastro() {
 	printf("cidade: 		%s \n", cidade);
 	printf("estado: 		%s \n", estado);
 	printf("cep: 			%s \n", cep);
-	//printf("dt.nascimento: 	%s \n", anoNasc);
-	//TestaData
 
-	//printf("dt.diagnotico: 	%s \n", dtdiag);
+//	printf("dt.nascimento: 	%s \n", dataDiagnostico );
+//	printf("dt.diagnotico: 	%s \n", dataDiagnostico);
+
 	printf("e-mail: 		%s \n", email);
 	printf("comorbidades: 	%s \n", comorbidades);
 
-	//printf("\n ANO NASCIMENTO: %d.\n", anoNasc);
-
 	idade = anoHoje() - anoNasc;
-//	printf("\n Idade : %d.\n", idade);
 
 	if (idade >= 65) {
 		grupoRisco = 1;
@@ -399,9 +435,9 @@ int cadastro() {
 	registro.bairro = bairro;
 	registro.cidade = cidade;
 	registro.estado = estado;
-	registro.cep = cep;
-	registro.dtnasc = dtnasc;
-	registro.dtdiag = dtdiag;
+	registro.cep    = cep;
+//	registro.dtnasc = dataNascimento;
+//	registro.dtdiag = dataDiagnostico;
 	registro.email = email;
 	registro.comorbidade = comorbidades;
 	registro.grupoRisco = grupoRisco;
@@ -537,6 +573,9 @@ int pegaData() { // @suppress("No return")
 	int retorno = 0;
 	int a;
 	x = 0;
+	char strDia[20];
+	char strMes[20];
+	char strAno[20];
 
 	do {
 		printf("[DT.NASCIMENTO]Entre uma data (DD/MM/YYYY formato): ");
@@ -586,6 +625,8 @@ int pegaData() { // @suppress("No return")
 	}
 	//printf("retorno foi %d \n",retorno);
 	if (retorno == 1) {
+
+
 		anoNasc = yy;
 	}
 	return retorno;
@@ -601,6 +642,10 @@ int pegaDataDiag() { // @suppress("No return")
 	int retorno = 0;
 	int a;
 	x = 0;
+
+	char strDia[2];
+	char strMes[2];
+	char strAno[4];
 
 	do {
 		printf("[DT.DIAGNOSTICO] Entre uma data (DD/MM/YYYY formato): ");
@@ -650,6 +695,9 @@ int pegaDataDiag() { // @suppress("No return")
 	}
 	//printf("retorno foi %d \n",retorno);
 	if (retorno == 1) {
+
+
+
 		anoDiag = yy;
 	}
 	return retorno;
@@ -700,8 +748,6 @@ int validarCPF(char *cpf) {
 
 int ufValida(char *uf) {
 
-
-
 	int i, retorno = 0, n;
 
 	char uf_list[27][20] = { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES",
@@ -720,50 +766,98 @@ int ufValida(char *uf) {
 
 }
 
+void defaultScanf(char *value, char defaultValue) {
+	char trash;
 
-void defaultScanf (char *value, char defaultValue)
-{
-    char trash;
+	*value = getchar();
+	/* set your default valut */
+	if (*value == '\n') {
+		*value = defaultValue;
+	} else {
+		*value -= '0'; /* transform char to int */
 
-    *value = getchar();
-    /* set your default valut */
-    if (*value == '\n') {
-        *value = defaultValue;
-    } else {
-        *value -= '0'; /* transform char to int */
-
-        /* clean your buffer */
-        do trash = getchar();
-        while (trash != '\n' && trash != EOF);
-    }
-}
-
-
-
-int emailValida (char *email2)
-{
-	int i, retorno = 0, n;
-	char email[50]="eu@eu.com.br";
-
-	printf( "tamanho do email %s \n",  strlen(email)    );
-
-	for (i = 0; i < 50 ; i++) {
-
-		printf("%s \n",  email[i]      );
-
-//		if (strcmp("@",email[i]) == 0) {
-//
-//			retorno = 1;
-//			break;
-//		}
-
-
+		/* clean your buffer */
+		do
+			trash = getchar();
+		while (trash != '\n' && trash != EOF);
 	}
-//
-//	if (strlen(email)<7){
-//		retorno = 0;
-//		}
-
-
-	return retorno;
 }
+
+/* INCLUSOES                                                                  */
+
+/* DEFINICOES                                                                 */
+#define false 0
+#define true  1
+
+/* FUNCOES                                                                    */
+/* chbuscar --- retorna a posição do elemento no vetor de tipos char          */
+int chbuscar(const int siz, const char base[siz], const char elem) {
+	for (int e = 0; e < siz; e += 1) {
+		if (elem == base[e]) {
+			return e;
+		}
+	}
+	return -1;
+}
+
+/* pegemail --- devolve 1 se a entrada for de um e-mail válido, 0 se não      */
+char validemail(char email_[], int limit) {
+	/* TIPOS LOCAIS                                                               */
+	char a = 0; /* Contém a próxima do @ no e-mail              */
+	char p = 0; /* Contém p próxima do ponto no e-mail          */
+	char t = 0; /* Contém t próxima do segundo teste            */
+	char s = 0; /* Contém s o tamanho da string e-mail          */
+
+	/* PROCESSAMENTO                                                              */
+	s = chbuscar(limit, email_, '\0'); /* ?Mesmo com limite ainda busca saber o
+	 tamanho real do string na memória.                                        */
+	a = chbuscar(s, &email_[t], '@'); /* ?Determinar agora a próxima onde se vΩ
+	 a primeira ocorrΩncia, e única de uma arroba, e guarda na memória         */
+	if (2 < a) { /* ?Se a próximo @ maior que 2 então existe string antes de a
+	 que satisfaz a condição de e-mail válido                                  */
+		if (email_[a + 1] == '.' || email_[a - 1] == '.') /* ?Ainda é preciso sa
+		 ber se existe pontos depois e antes do primeiro e talvez único arroba se
+		 não existir arroba entre pontos então devemos continua nos  testes    */
+		{
+			return false;
+		}
+		t = chbuscar(s - (a), &email_[1 + (a)], '@'); /* ?Agora buscamos outra
+		 ocorrência de arroba, para isso subtraiu   do limite a posição de    @
+		 e posicionamos o endereço da memória no próximo valor depois de arroba
+		 e pesquisamos mais uma vez pelo @      na memória                     */
+		if (0 <= t) /* ?Se t for maior ou igual a 0 é porque encontrou mais uma
+		 ocorrência de arroba, finalizando a buscar, se não continua os testes */
+		{
+			return false;
+		}
+		p = chbuscar(s - (a), &email_[1 + (a)], '.'); /* ?Agora buscamos por um
+		 ponto depois do arroba, nisso passamos o limite como sendo a próximo de
+		 arroba menos o tamanho do string, e o endereço imediatamente após arro-
+		 ba, e buscamos o ponto                                                */
+		if (p < 2) /* ?Se a posição do ponto for menor que 2 significa que não
+		 existe entre o @ e ponto o limite mínimo de 3 caracteres, daí retorna
+		 falso, se não então continua buscando outra ocorrencia de ponto      */
+		{
+			return false;
+		}
+		t = chbuscar(s - (1 + (a + p)), &email_[2 + (a + p)], '.'); /* ?Procura
+		 uma vez pelo ponto em busca de ocorrências repetidas, o limite da busca
+		 agora é a diferença de @ e .       o que sobra da string, se existir ou-
+		 ponto então não é o email válido                                      */
+		if (0 <= t) /* ?Se t é maior ou igual a 0 então encontrou pontos depois
+		 de ponto, log esse email tem 2 ou mais ponto, é inválido             */
+		{
+			return false;
+		}
+		t = chbuscar(s - (1 + (a + p)), &email_[2 + (a + p)], '\0'); /* ?Por fim
+		 buscamos pelo fim da string começando da única ocorrência de ponto, se*/
+		if (1 < t) /* t for maior 1 então existe pelo menos 2 caracteres depois
+		 de ponto, por fim se nada der errado acima, o e-mail é válido         */
+		{
+			return true;
+		}
+	}
+	/* FIM */
+	return false;
+}
+
