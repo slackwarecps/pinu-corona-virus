@@ -3,3 +3,5 @@ fabio;26721993880;123;123;;123;123;123;123;ÿÿ;;eu@eu.com.br;nada;
 Fabio;Pereira;26721993880;das;;batatas,;333;291;123;ÿÿ;;qwe;qwe;
 a;26721993880;123;123;123;123;123;SP;13070028;ÿÿ;;eu@eu.com.br;nenhuma;
 Maria;2672993880;123;123;123;chapadao;campinas;SP;13070100;;;maria@velho.com.br;diabetes;
+123;123;123;123;123;123;123;123;123;ÿÿ;;qwe;qwe;
+Fabio;26721993880;123;123;123;123;123;13070000;;ÿÿ;;eu@eu.com.br;nenhuma;

@@ -14,18 +14,26 @@ void concatenate_string(char*, char*);
 int menu();
 int cadastro();
 int salvar();
-int salvarRisco( ) ;
+int salvarRisco();
 int mostrarArquivo();
 int anoHoje();
 int pegaData();
 int pegaDataDiag();
+int validarCPF();
+int ufValida();
+void defaultScanf (char *value, char defaultValue);
+char gethoje();
+int emailValida();
 
 char linhaPadrao[] =
 		"============================================================================\n";
-int anoNasc,anoDiag;
+int anoNasc, anoDiag;
 int idade;
 int dataValida = 0;
 int dataValidadiag = 0;
+char *toda[10];
+
+char teste[50];
 
 struct cadastroData {
 	char *nome;
@@ -45,6 +53,10 @@ struct cadastroData {
 };
 
 int main() {
+
+
+
+
 
 	//============================================================================
 	printf("%s", linhaPadrao);
@@ -183,17 +195,62 @@ int cadastro() {
 	char email[50];
 	char comorbidades[50];
 	struct cadastroData registro;
+	int x;
 
 	grupoRisco = 0;
 
 	printf("\n CADASTRO \n");
 	printf("=========================== \n");
 
-	printf("Primeiro nome: ");
-	scanf("%s", nome);
+//	printf("Primeiro nome: ");
+//	scanf("%s", nome);
 
-	printf("CPF: ");
-	scanf("%s", cpf);
+	do {
+		printf("Primeiro nome: ");
+		x = scanf("%s", nome);
+
+		if (x == 0) {
+			char c;
+			printf(" [Primeiro nome] pressione qualquer tecla \n");
+			c = getchar();
+		} else {
+			if (strlen(nome) > 50) {
+				printf(
+						" [Primeiro nome] Campo deve ter menor de 50 caracteres.  \n");
+				x = 0;
+				c = getchar();
+
+			}
+		}
+
+	} while (x == 0);
+
+//	printf("CPF [somente numeros]: ");
+//	scanf("%s", cpf);
+	do {
+		printf("CPF [somente numeros]: ");
+		x = scanf("%s", cpf);
+
+		if (x == 0) {
+			char c;
+			printf(" [CPF] pressione qualquer tecla \n");
+			c = getchar();
+		} else {
+			if (strlen(cpf) != 11) {
+				printf(
+						" [CPF] Campo deve ter 11 caracteres. pressione qualquer tecla  \n");
+				x = 0;
+				c = getchar();
+
+			}
+			if (validarCPF(cpf) == 0) {
+				printf(" [CPF] CPF invalido!!!. pressione qualquer tecla \n");
+				x = 0;
+				c = getchar();
+			}
+		}
+
+	} while (x == 0);
 
 	printf("Telefone: ");
 	scanf("%s", telefone);
@@ -210,12 +267,56 @@ int cadastro() {
 	printf("Cidade: ");
 	scanf("%s", cidade);
 
-	printf("Estado: ");
-	scanf("%s", estado);
+//	printf("Estado[UF]: ");
+//	scanf("%s", estado);
+	do {
+		printf("Estado[UF] Letras Maiusculas: ");
+		x = scanf("%s", estado);
 
-	printf("CEP: ");
-	scanf("%s", cep);
+		if (x == 0) {
+			char c;
+			printf("Estado[UF] pressione qualquer tecla \n");
+			c = getchar();
+		} else {
+			if (strlen(estado) != 2) {
+				printf(
+						"Estado[UF] Campo deve ter 2 caracteres texto. pressione qualquer tecla  \n");
+				x = 0;
+				c = getchar();
 
+			}
+			if (ufValida(estado) == 0) {
+				printf(
+						"Estado[UF] UF invalido!!!. pressione qualquer tecla \n");
+				x = 0;
+				c = getchar();
+			}
+		}
+
+	} while (x == 0);
+
+//	printf("CEP: ");
+//	scanf("%s", cep);
+	do {
+		printf("CEP [FORMATO: NNNNNNNN, SOMENTE NUMEROS]: ");
+		x = scanf("%s", cep);
+
+		if (x == 0) {
+			char c;
+			printf("Estado[UF] pressione qualquer tecla \n");
+			c = getchar();
+		} else {
+			if (strlen(cep) != 8) {
+				printf(
+						"CEP Campo deve ter 8 caracteres NUMEROS. pressione qualquer tecla  \n");
+				x = 0;
+				c = getchar();
+
+			}
+
+		}
+
+	} while (x == 0);
 
 
 
@@ -230,8 +331,6 @@ int cadastro() {
 	} while (dataValida == 0);
 	//fim do pega e valida dt.nasc
 
-
-
 //	printf("DT.DIAGNOSTICO: ");
 //	scanf("%s", dtdiag);
 	//inico do pega e valida o campo dt.nasc.
@@ -244,7 +343,6 @@ int cadastro() {
 		}
 	} while (dataValidadiag == 0);
 	//fim do pega e valida dt.nasc
-
 
 	printf("E-MAIL: ");
 	scanf("%s", email);
@@ -313,7 +411,7 @@ int cadastro() {
 	return 0;
 }
 
-int salvar(struct cadastroData pRegistro,int risco) {
+int salvar(struct cadastroData pRegistro, int risco) {
 
 	//printf(" Nome is: %s \n", pRegistro.nome);
 
@@ -380,7 +478,6 @@ int salvarRisco(struct cadastroData pRegistro) {
 	char *SEPARADOR = ";";
 	char linha[1000] = "";
 
-
 	concatenate_string(linha, registro.cpf);
 	concatenate_string(linha, SEPARADOR);
 	concatenate_string(linha, registro.cep);
@@ -398,7 +495,6 @@ int salvarRisco(struct cadastroData pRegistro) {
 
 	return 0;
 }
-
 
 int mostrarArquivo() {
 	FILE *farquivo;
@@ -431,8 +527,6 @@ int mostrarArquivo() {
 int anoHoje() {
 	return 2020;
 }
-
-
 
 int pegaData() { // @suppress("No return")
 	int dd, mm, yy;
@@ -508,8 +602,6 @@ int pegaDataDiag() { // @suppress("No return")
 	int a;
 	x = 0;
 
-
-
 	do {
 		printf("[DT.DIAGNOSTICO] Entre uma data (DD/MM/YYYY formato): ");
 		x = scanf("%d/%d/%d", &dd, &mm, &yy);
@@ -560,5 +652,118 @@ int pegaDataDiag() { // @suppress("No return")
 	if (retorno == 1) {
 		anoDiag = yy;
 	}
+	return retorno;
+}
+
+int validarCPF(char *cpf) {
+	int i, j, digito1 = 0, digito2 = 0;
+	if (strlen(cpf) != 11)
+		return 0;
+	else if ((strcmp(cpf, "00000000000") == 0)
+			|| (strcmp(cpf, "11111111111") == 0)
+			|| (strcmp(cpf, "22222222222") == 0)
+			|| (strcmp(cpf, "33333333333") == 0)
+			|| (strcmp(cpf, "44444444444") == 0)
+			|| (strcmp(cpf, "55555555555") == 0)
+			|| (strcmp(cpf, "66666666666") == 0)
+			|| (strcmp(cpf, "77777777777") == 0)
+			|| (strcmp(cpf, "88888888888") == 0)
+			|| (strcmp(cpf, "99999999999") == 0))
+		return 0; ///se o CPF tiver todos os números iguais ele é inválido.
+	else {
+		///digito 1---------------------------------------------------
+		for (i = 0, j = 10; i < strlen(cpf) - 2; i++, j--) ///multiplica os números de 10 a 2 e soma os resultados dentro de digito1
+			digito1 += (cpf[i] - 48) * j;
+		digito1 %= 11;
+		if (digito1 < 2)
+			digito1 = 0;
+		else
+			digito1 = 11 - digito1;
+		if ((cpf[9] - 48) != digito1)
+			return 0; ///se o digito 1 não for o mesmo que o da validação CPF é inválido
+		else
+		///digito 2--------------------------------------------------
+		{
+			for (i = 0, j = 11; i < strlen(cpf) - 1; i++, j--) ///multiplica os números de 11 a 2 e soma os resultados dentro de digito2
+				digito2 += (cpf[i] - 48) * j;
+			digito2 %= 11;
+			if (digito2 < 2)
+				digito2 = 0;
+			else
+				digito2 = 11 - digito2;
+			if ((cpf[10] - 48) != digito2)
+				return 0; ///se o digito 2 não for o mesmo que o da validação CPF é inválido
+		}
+	}
+	return 1;
+}
+
+int ufValida(char *uf) {
+
+
+
+	int i, retorno = 0, n;
+
+	char uf_list[27][20] = { "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES",
+			"GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ",
+			"RN", "RO", "RS", "RR", "SC", "SE", "SP", "TO" }, name[10];
+
+	for (i = 0; i < 27; i++) {
+		if (strcmp(uf, uf_list[i]) == 0) {
+
+			retorno = 1;
+			break;
+		}
+	}
+
+	return retorno;
+
+}
+
+
+void defaultScanf (char *value, char defaultValue)
+{
+    char trash;
+
+    *value = getchar();
+    /* set your default valut */
+    if (*value == '\n') {
+        *value = defaultValue;
+    } else {
+        *value -= '0'; /* transform char to int */
+
+        /* clean your buffer */
+        do trash = getchar();
+        while (trash != '\n' && trash != EOF);
+    }
+}
+
+
+
+int emailValida (char *email2)
+{
+	int i, retorno = 0, n;
+	char email[50]="eu@eu.com.br";
+
+	printf( "tamanho do email %s \n",  strlen(email)    );
+
+	for (i = 0; i < 50 ; i++) {
+
+		printf("%s \n",  email[i]      );
+
+//		if (strcmp("@",email[i]) == 0) {
+//
+//			retorno = 1;
+//			break;
+//		}
+
+
+	}
+//
+//	if (strlen(email)<7){
+//		retorno = 0;
+//		}
+
+
 	return retorno;
 }
