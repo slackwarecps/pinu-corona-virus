@@ -436,15 +436,16 @@ int cadastro() {
 	registro.cidade = cidade;
 	registro.estado = estado;
 	registro.cep    = cep;
-//	registro.dtnasc = dataNascimento;
-//	registro.dtdiag = dataDiagnostico;
+	registro.dtnasc = dtnasc;
+	registro.dtdiag = dtdiag;
 	registro.email = email;
 	registro.comorbidade = comorbidades;
 	registro.grupoRisco = grupoRisco;
+	printf("Finalizou o cadastro ... \n");
 
 	salvar(registro);
 
-	return 0;
+	return 1;
 }
 
 int salvar(struct cadastroData pRegistro, int risco) {
@@ -495,10 +496,11 @@ int salvar(struct cadastroData pRegistro, int risco) {
 	}
 	fputs(linha, farquivo);
 	fclose(farquivo);
+	printf("Salvou o cadastro... \n");
 
 	salvarRisco(pRegistro);
 
-	return 0;
+	return 1;
 }
 
 int salvarRisco(struct cadastroData pRegistro) {
@@ -528,8 +530,9 @@ int salvarRisco(struct cadastroData pRegistro) {
 	}
 	fputs(linha, farquivo);
 	fclose(farquivo);
+printf("Salvou o Risco... \n");
 
-	return 0;
+	return 1;
 }
 
 int mostrarArquivo() {
@@ -556,7 +559,7 @@ int mostrarArquivo() {
 	fclose(farquivo);
 
 	printf("\n\n");
-	return 0;
+	return 1;
 
 }
 
